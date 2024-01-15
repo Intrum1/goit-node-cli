@@ -17,28 +17,26 @@ program.parse();
 
 const options = program.opts();
 
-// TODO: рефакторити
 async function invokeAction({ action, id, name, email, phone }) {
   switch (action) {
     case "list":
-      listContacts().then(console.table);
-      // console.log("Contacts list:", contacts);
+      const contacts = await listContacts();
+      console.table(contacts);
       break;
 
     case "get":
-      getContactById(id).then((contact) =>
-        console.log(contact || "Contact not found"),
-      );
+      const contact = await getContactById(id);
+      console.log(contact);
       break;
 
     case "add":
-      addContact(name, email, phone).then(console.log);
+      const newContact = await addContact(name, email, phone);
+      console.log(newContact);
       break;
 
     case "remove":
-      removeContact(id).then((contact) =>
-        console.log(contact || "Contact not found"),
-      );
+      const oldContact = await removeContact(id);
+      console.log(oldContact);
       break;
 
     default:
